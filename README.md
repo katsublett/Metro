@@ -1,6 +1,6 @@
 # Metro Transportation System
 #### Group Project: Oracle PL/SQL Project on Metro Transportation System
-
+###### [Project Instructions](https://github.com/katsublett/Metro/blob/d1/ProjectInstructions.pdf)
 ##### Team Members:
 1. Karina Lopez
 2. Mahnoor Tariq
