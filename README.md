@@ -21,4 +21,8 @@
 ## *Timetables:*
 ![Timetables for Trains](https://github.com/katsublett/Metro/blob/media/Timetables.png?raw=true)
 
+---
+## ERD
+![ERD](https://github.com/katsublett/Metro/blob/media/ERD.png?raw=true)
+
 
