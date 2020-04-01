@@ -110,9 +110,7 @@ CREATE SEQUENCE line_station_line_id START WITH 1 INCREMENT BY 1;
 
 --------------------------------------------------------------
 -- The dummy data for the following tables can be deleted from this file once procedures are created:
--- 1. METRO_CARD
--- 2. TRANSACTIONS
--- 3. TRIPS
+-- 1. TRIPS
 
 -- RIDER Data
 insert into rider (rider_account_id, rider_email, rider_password, rider_name, rider_age) values (1, 'edarrigrand0@indiatimes.com', 'McBNEHKx34d', 'Emalee Darrigrand', 13);
@@ -131,44 +129,10 @@ insert into rider (rider_account_id, rider_email, rider_password, rider_name, ri
 insert into rider (rider_account_id, rider_email, rider_password, rider_name, rider_age) values (14, 'gpielld@yolasite.com', 'BVnTzBKiQzlj', 'Gleda Piell', 75);
 insert into rider (rider_account_id, rider_email, rider_password, rider_name, rider_age) values (15, 'uhinriche@comcast.net', 'Nr3hw7aJ0', 'Ulrikaumeko Hinrich', 3);
 
--- METRO_CARD Data
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (1, 286.53, 1, 6);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (2, 385.5, 1, 7);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (3, 485.37, 1, 4);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (4, 83.35, 2, 8);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (5, 101.67, 2, 3);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (6, 274.0, 1, 15);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (7, 167.38, 2, 6);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (8, 118.15, 2, 7);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (9, 493.5, 3, 6);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (10, 58.86, 1, 12);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (11, 333.08, 2, 7);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (12, 128.79, 2, 8);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (13, 143.79, 2, 14);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (14, 355.58, 3, 15);
-insert into metro_card (card_id, card_balance, discount_type, rider_account_id) values (15, 385.77, 3, 12);
-
 -- DISCOUNTS Data
 insert into discounts (discount_id, regular_rate, discount_amt) values (1, 7.50, 0);
 insert into discounts (discount_id, regular_rate, discount_amt) values (2, 7.50, 2.50);
 insert into discounts (discount_id, regular_rate, discount_amt) values (3, 7.50, 3.00);
-
--- TRANSACTIONS Data
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (1, 10, to_date('2019-05-08 20:59:52', 'YYYY-MM-DD HH24:MI:SS'), 13.17);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (2, 10, to_date('2019-03-25 06:09:15', 'YYYY-MM-DD HH24:MI:SS'), 23.74);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (3, 1, to_date('2019-06-28 23:54:16', 'YYYY-MM-DD HH24:MI:SS'), 123.72);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (4, 4, to_date('2020-02-01 12:43:27', 'YYYY-MM-DD HH24:MI:SS'), 42.09);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (5, 2, to_date('2019-12-01 20:09:02', 'YYYY-MM-DD HH24:MI:SS'), 122.75);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (6, 11, to_date('2019-12-29 23:08:37', 'YYYY-MM-DD HH24:MI:SS'), 126.47);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (7, 7, to_date('2019-05-29 22:34:02', 'YYYY-MM-DD HH24:MI:SS'), 132.2);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (8, 14, to_date('2019-03-03 12:50:37', 'YYYY-MM-DD HH24:MI:SS'), 65.53);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (9, 9, to_date('2019-08-29 14:33:31', 'YYYY-MM-DD HH24:MI:SS'), 126.31);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (10, 6, to_date('2019-07-31 11:01:05', 'YYYY-MM-DD HH24:MI:SS'), 60.6);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (11, 9, to_date('2019-07-29 16:04:39', 'YYYY-MM-DD HH24:MI:SS'), 9.65);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (12, 9, to_date('2019-12-12 06:13:29', 'YYYY-MM-DD HH24:MI:SS'), 140.75);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (13, 10, to_date('2019-09-08 22:29:28', 'YYYY-MM-DD HH24:MI:SS'), 116.79);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (14, 1, to_date('2019-06-22 23:12:00', 'YYYY-MM-DD HH24:MI:SS'), 149.53);
-insert into transactions (transaction_id, metro_card_id, transaction_time, transaction_amt) values (15, 5, to_date('2019-04-12 10:21:32', 'YYYY-MM-DD HH24:MI:SS'), 147.11);
 
 -- STATION Data
 insert into station (station_id, station_name, station_address, station_city, station_state, station_zip, station_status) values (1, 'Greenbelt', '6 Sage Lane', 'Frederick', 'DC', '20530', 1);
