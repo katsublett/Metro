@@ -78,5 +78,5 @@ EXCEPTION
   WHEN OTHERS THEN dbms_output.put_line ('something went wrong here');
 END;
 /
-EXECUTE addtrip(14, 1, 3, '06/06/2019 06:57:25', '06/06/2019 06:57:25');
+EXECUTE addtrip(1, 1, 3, to_date('06/06/2019 06:57:25', 'DD/MM/YYYY HH:MI:SS AM'), to_date('06/06/2019 06:57:25', 'DD/MM/YYYY HH:MI:SS AM'));
 
