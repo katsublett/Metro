@@ -1,0 +1,104 @@
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE FUNCTION task9 (
+  originstation IN VARCHAR2,
+  destinationstation IN VARCHAR2,
+  lineid IN NUMBER
+  )
+  RETURN NUMBER 
+IS 
+  origin NUMBER;
+  destination NUMBER;
+  direction NUMBER;
+BEGIN
+  SELECT station_id INTO origin FROM station WHERE station_name = originstation;
+  SELECT station_id INTO destination FROM station WHERE station_name = destinationstation;
+  
+  IF (origin < destination) THEN
+    direction := 1;
+  ELSE
+    direction := 2;
+  END IF;
+  
+  return(direction);
+END;
+/
+CREATE OR REPLACE PROCEDURE schedules_for_station (
+   start_time_param IN INTERVAL DAY TO SECOND, 
+   gap_param IN NUMBER, 
+   origin_station_param IN VARCHAR2, 
+   destination_station_param IN VARCHAR2,
+   line_name_param IN VARCHAR2
+)
+IS
+  -- variable declarations
+  line_id NUMBER;
+  origin_rec_count NUMBER;
+  destination_rec_count NUMBER;
+  endtime INTERVAL DAY TO SECOND;
+  
+  a NUMBER;
+  -- cursor needs to change.
+  CURSOR c1 IS
+    SELECT 
+      sch_st.schedule_id,
+      sch_st.arrival_time
+    FROM schedule_station sch_st
+      INNER JOIN station st ON sch_st.station_id = st.station_id
+    WHERE station_name = origin_station_param AND arrival_time BETWEEN start_time_param AND endtime;
+    
+  c1_rec c1%rowtype;
+
+  invalid_station EXCEPTION;
+  invalid_line EXCEPTION;
+BEGIN
+  -- Calculate end time
+  endtime := start_time_param + numtodsinterval(gap_param, 'minute');
+
+  -- Turn line name input into number
+  IF line_name_param = 'Red' THEN line_id := '1'; ELSIF line_name_param = 'Green' THEN line_id := '2'; ELSE RAISE invalid_line; END IF;
+
+  -- Check if origin station exists
+  SELECT COUNT(*) INTO origin_rec_count FROM station WHERE station_name = origin_station_param;
+  
+  -- Check if destination station exists
+  SELECT COUNT(*) INTO destination_rec_count FROM station WHERE station_name = destination_station_param;
+  
+  
+  IF (origin_rec_count > 0 AND destination_rec_count > 0) THEN
+    -- Check if these stations are in the same direction - using function task9
+    a := task9(origin_station_param, destination_station_param, line_id);
+  
+    dbms_output.put_line(
+      'Schedules for ' || origin_station_param || ' Station to ' || destination_station_param || ' station.');
+    dbms_output.put_line(
+      'From ' || extract(HOUR FROM start_time_param) || ':' || extract(MINUTE FROM start_time_param) || 
+      ' to ' || extract(HOUR FROM endtime) || ':' || extract(MINUTE FROM endtime) || '.' );
+    dbms_output.put_line('Departures in direction ' || a || ' on the ' || line_name_param || ' line.' );
+    dbms_output.put_line('----------------------------------------------------------------------------');
+    dbms_output.put_line('Schedule ID | Scheduled Arrival Time At ' || destination_station_param || ' Station.');
+    dbms_output.put_line('----------------------------------------------------------------------------');
+      OPEN c1;
+        LOOP
+        FETCH c1 INTO c1_rec;
+        EXIT WHEN c1%notfound;
+          dbms_output.put_line(
+            c1_rec.schedule_id || 
+            '               ' || 
+            extract(HOUR FROM c1_rec.arrival_time) || ':' || extract(MINUTE FROM c1_rec.arrival_time) );
+        END LOOP;
+      CLOSE c1;
+  ELSE  
+    RAISE invalid_station;
+  END IF;  
+
+EXCEPTION
+  -- user defined
+  WHEN invalid_line THEN dbms_output.put_line('Invalid line name.');
+  WHEN invalid_station THEN dbms_output.put_line('Invalid station name.');
+  
+  WHEN no_data_found THEN dbms_output.put_line('no data found');
+
+END;
+/
+-- start time, time gap, origin station, destination station, and line name
+EXECUTE schedules_for_station('+00 07:30:00.000000', 60, 'Greenbelt', 'Chinatown', 'Red');
